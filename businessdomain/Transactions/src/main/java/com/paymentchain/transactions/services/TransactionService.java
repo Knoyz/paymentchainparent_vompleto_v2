@@ -8,7 +8,6 @@ package com.paymentchain.transactions.services;
 import com.paymentchain.transactions.entities.Transaction;
 import com.paymentchain.transactions.exception.BussinesRuleException;
 import com.paymentchain.transactions.respository.TransactionRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
