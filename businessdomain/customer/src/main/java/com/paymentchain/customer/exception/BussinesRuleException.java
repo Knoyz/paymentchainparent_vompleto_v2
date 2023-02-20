@@ -9,30 +9,30 @@ import org.springframework.http.HttpStatus;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
-public class BussinesRuleException extends Exception{
-  
+public class BussinesRuleException extends Exception {
+
     private long id;
-    private String code;   
+    private String code;
     private HttpStatus httpStatus;
-    
-    public BussinesRuleException(long id, String code, String message,HttpStatus httpStatus) {
+
+    public BussinesRuleException(long id, String code, String message, HttpStatus httpStatus) {
         super(message);
         this.id = id;
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public BussinesRuleException(String code, String message,HttpStatus httpStatus) {
+    public BussinesRuleException(String code, String message, HttpStatus httpStatus) {
         super(message);
         this.code = code;
         this.httpStatus = httpStatus;
     }
-    
+
     public BussinesRuleException(String message, Throwable cause) {
         super(message, cause);
-    }     
+    }
 
     public long getId() {
         return id;
@@ -40,7 +40,7 @@ public class BussinesRuleException extends Exception{
 
     public void setId(long id) {
         this.id = id;
-    }    
+    }
 
     public String getCode() {
         return code;
@@ -48,7 +48,7 @@ public class BussinesRuleException extends Exception{
 
     public void setCode(String code) {
         this.code = code;
-    }   
+    }
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
@@ -56,6 +56,6 @@ public class BussinesRuleException extends Exception{
 
     public void setHttpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
-    }    
-    
+    }
+
 }

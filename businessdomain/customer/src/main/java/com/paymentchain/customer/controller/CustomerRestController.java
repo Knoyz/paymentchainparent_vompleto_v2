@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author sotobotero
+ * @author Knoyz
  */
 @RestController
 @RequestMapping("/customer")
@@ -45,15 +45,14 @@ public class CustomerRestController {
     @Value("${user.role}")
     private String role;
 
-
-    //obtener toda la informacion de un cliente por el codigo de cliente
+    // obtener toda la informacion de un cliente por el codigo de cliente
     @GetMapping("/full")
     public Customer getByCode(@RequestParam String code) {
         Customer customer = bt.getByCode(code);
         return customer;
     }
 
-    //lista completa de clientes
+    // lista completa de clientes
     @GetMapping()
     public ResponseEntity<List<Customer>> list() {
         List<Customer> findAll = customerRepository.findAll();
@@ -64,36 +63,34 @@ public class CustomerRestController {
         }
     }
 
-    //mensaje introductorio (en desarrollo)
+    // mensaje introductorio (en desarrollo)
     @GetMapping("/hello")
     public String sayHello() {
         return "Hello your role is: " + role;
     }
 
-    //obtener un cliente por id de cliente en base de datos
+    // obtener un cliente por id de cliente en base de datos
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> get(@PathVariable long id) throws BussinesRuleException{
+    public ResponseEntity<Customer> get(@PathVariable long id) throws BussinesRuleException {
         return bt.get(id);
     }
 
-
-    //modificar informacion de un cliente por el id de cliente
+    // modificar informacion de un cliente por el id de cliente
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable String id, @RequestBody Customer input) throws BussinesRuleException
-    {
-        return bt.put(id,input);
+    public ResponseEntity<?> put(@PathVariable String id, @RequestBody Customer input) throws BussinesRuleException {
+        return bt.put(id, input);
     }
 
-    //crear un cliente nuevo
+    // crear un cliente nuevo
     @PostMapping
     public ResponseEntity<?> post(@RequestBody Customer input) throws BussinesRuleException, UnknownHostException {
         Customer save = bt.save(input);
         return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
-    //borrar un cliente mediante su id en base de datos
+    // borrar un cliente mediante su id en base de datos
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) throws BussinesRuleException{
+    public ResponseEntity<?> delete(@PathVariable String id) throws BussinesRuleException {
         return bt.deleteCustomerById(id);
     }
 

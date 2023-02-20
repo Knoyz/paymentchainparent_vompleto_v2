@@ -32,7 +32,7 @@ import reactor.netty.tcp.TcpClient;
 import javax.transaction.Transaction;
 
 /**
- * @author sotobotero
+ * @author Knoyz
  */
 @Service
 public class BussinesTransaction {
@@ -46,7 +46,7 @@ public class BussinesTransaction {
         this.webClientBuilder = webClientBuilder;
     }
 
-    //define timeout
+    // define timeout
     TcpClient tcpClient = TcpClient
             .create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
@@ -74,11 +74,12 @@ public class BussinesTransaction {
 
     public Customer save(Customer input) throws BussinesRuleException, UnknownHostException {
         if (input.getProducts() != null) {
-            for (Iterator<CustomerProduct> it = input.getProducts().iterator(); it.hasNext(); ) {
+            for (Iterator<CustomerProduct> it = input.getProducts().iterator(); it.hasNext();) {
                 CustomerProduct dto = it.next();
                 String productName = getProductName(dto.getProductId());
                 if (productName.isBlank()) {
-                    BussinesRuleException exception = new BussinesRuleException("1025", "Error de validacion, producto no existe", HttpStatus.PRECONDITION_FAILED);
+                    BussinesRuleException exception = new BussinesRuleException("1025",
+                            "Error de validacion, producto no existe", HttpStatus.PRECONDITION_FAILED);
                     throw exception;
                 } else {
                     dto.setCustomer(input);
@@ -92,15 +93,17 @@ public class BussinesTransaction {
     private <T> List<T> getTransacctions(String accountIban) {
         List<T> trasnsactions = new ArrayList<>();
         try {
-            WebClient client = webClientBuilder.clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
+            WebClient client = webClientBuilder
+                    .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                     .baseUrl("http://businessdomain-transactions/transaction")
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .defaultUriVariables(Collections.singletonMap("url", "http://businessdomain-transactions/transaction"))
+                    .defaultUriVariables(
+                            Collections.singletonMap("url", "http://businessdomain-transactions/transaction"))
                     .build();
             List<Object> block = client.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder
-                            .path("/transactions")
-                            .queryParam("ibanAccount", accountIban)
-                            .build())
+                    .path("/transactions")
+                    .queryParam("ibanAccount", accountIban)
+                    .build())
                     .retrieve().bodyToFlux(Object.class).collectList().block();
             trasnsactions = (List<T>) block;
         } catch (Exception e) {
@@ -112,7 +115,8 @@ public class BussinesTransaction {
     private String getProductName(long id) throws UnknownHostException {
         String name = null;
         try {
-            WebClient client = webClientBuilder.clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
+            WebClient client = webClientBuilder
+                    .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                     .baseUrl("http://businessdomain-product/product")
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .defaultUriVariables(Collections.singletonMap("url", "http://businessdomain-product/product"))
@@ -131,7 +135,7 @@ public class BussinesTransaction {
         return name;
     }
 
-    public ResponseEntity<Customer> get(long id) throws BussinesRuleException{
+    public ResponseEntity<Customer> get(long id) throws BussinesRuleException {
         HttpStatus httpStatus = HttpStatus.OK;
         Customer customer;
         Optional<Customer> OptCustomer = customerRepository.findById(id);
@@ -149,14 +153,14 @@ public class BussinesTransaction {
                 });
             }
             customer.setTransactions(getTransacctions(customer.getIban()));
-        }else{
+        } else {
             httpStatus = HttpStatus.NOT_FOUND;
-            throw new BussinesRuleException("1026","id no encontrado",httpStatus);
+            throw new BussinesRuleException("1026", "id no encontrado", httpStatus);
         }
         return new ResponseEntity<>(customer, httpStatus);
     }
 
-    public ResponseEntity<?> put(String id, Customer input) throws BussinesRuleException{
+    public ResponseEntity<?> put(String id, Customer input) throws BussinesRuleException {
         HttpStatus httpStatus = HttpStatus.OK;
 
         Customer customer = customerRepository.findById(Long.valueOf(id)).get();
@@ -170,16 +174,25 @@ public class BussinesTransaction {
             throw new BussinesRuleException("1026", "Faltan datos importantes para la modificacion", httpStatus);
         } else {
             if (customer != null) {
-                //solo cambia si existe la entrada de cada dato de cliente
-                if (input.getName() != null) customer.setName(input.getName());
-                if (input.getCode() != null) customer.setCode(input.getCode());
-                if (input.getIban() != null) customer.setIban(input.getIban());
-                if (input.getNames() != null) customer.setNames(input.getNames());
-                if (input.getUsername() != null) customer.setUsername(input.getUsername());
-                if (input.getPhone() != null) customer.setPhone(input.getPhone());
-                if (input.getAddress() != null) customer.setAddress(input.getAddress());
-                if (input.getProducts() != null) customer.setProducts(input.getProducts());
-                if (input.getTransactions() != null) customer.setTransactions(input.getTransactions());
+                // solo cambia si existe la entrada de cada dato de cliente
+                if (input.getName() != null)
+                    customer.setName(input.getName());
+                if (input.getCode() != null)
+                    customer.setCode(input.getCode());
+                if (input.getIban() != null)
+                    customer.setIban(input.getIban());
+                if (input.getNames() != null)
+                    customer.setNames(input.getNames());
+                if (input.getUsername() != null)
+                    customer.setUsername(input.getUsername());
+                if (input.getPhone() != null)
+                    customer.setPhone(input.getPhone());
+                if (input.getAddress() != null)
+                    customer.setAddress(input.getAddress());
+                if (input.getProducts() != null)
+                    customer.setProducts(input.getProducts());
+                if (input.getTransactions() != null)
+                    customer.setTransactions(input.getTransactions());
             } else {
                 httpStatus = HttpStatus.NO_CONTENT;
                 throw new BussinesRuleException("1027", "No se encontro a ningun cliente con ese id", httpStatus);
@@ -195,8 +208,7 @@ public class BussinesTransaction {
             httpStatus = HttpStatus.NOT_FOUND;
             throw new BussinesRuleException("1027", "No se encontro a ningun cliente con ese id", httpStatus);
         }
-                customerRepository.deleteById(Long.valueOf(id));
-        return new ResponseEntity<>(customer,httpStatus);
+        customerRepository.deleteById(Long.valueOf(id));
+        return new ResponseEntity<>(customer, httpStatus);
     }
 }
-

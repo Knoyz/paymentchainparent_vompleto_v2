@@ -12,12 +12,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 @Configuration
 public class WebClientConfig {
 
-    
   @Bean
   @LoadBalanced
   public WebClient.Builder loadBalancedWebClientBuilder() {

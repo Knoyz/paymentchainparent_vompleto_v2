@@ -9,9 +9,8 @@ import com.paymentchain.customer.entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-
 /**
- * @author sotobotero
+ * @author Knoyz
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 

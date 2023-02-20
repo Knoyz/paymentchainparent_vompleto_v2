@@ -18,22 +18,22 @@ import lombok.Data;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 @Entity
 @Data
 public class Customer {
-   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-   private long id;
-   private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private String name;
     private String code;
     private String iban;
     private String names;
     private String username;
     private String phone;
-    private String address; 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)   
+    private String address;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CustomerProduct> products;
     @Transient
     private List<?> transactions;

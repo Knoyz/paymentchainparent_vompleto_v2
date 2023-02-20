@@ -5,15 +5,13 @@
  */
 package com.paymentchain.products.respository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.paymentchain.products.entities.Product;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
- 
-   }
+}

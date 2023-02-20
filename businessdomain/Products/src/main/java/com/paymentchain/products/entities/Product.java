@@ -13,15 +13,15 @@ import lombok.Data;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 @Entity
 @Data
 public class Product {
-   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-   private long id;
-   private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private String name;
     private String code;
-  
+
 }

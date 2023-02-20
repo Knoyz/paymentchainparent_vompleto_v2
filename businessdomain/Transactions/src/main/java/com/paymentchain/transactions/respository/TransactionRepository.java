@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     

@@ -14,21 +14,21 @@ import lombok.Data;
 
 /**
  *
- * @author sotobotero
+ * @author Knoyz
  */
 @Data
 @Entity
 public class Transaction {
-    
+
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-   private long id;
-   private String reference;
-   private String ibanAccount;
-   private LocalDateTime date;
-   private double amount ;
-   private double fee;   
-   private String description;
-   private String status;
-   private String channel;   
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
+  private String reference;
+  private String ibanAccount;
+  private LocalDateTime date;
+  private double amount;
+  private double fee;
+  private String description;
+  private String status;
+  private String channel;
 }
